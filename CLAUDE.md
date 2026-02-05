@@ -123,6 +123,12 @@ Chaque projet/expérimentation a son dossier avec:
 - À ne PAS oublier entre sessions
 - Garder concis, effacer l'obsolete
 
+**Git Sync (IMPORTANT)**
+- Pusher régulièrement pour sauvegarder config + mémoire
+```bash
+git add . && git commit -m "sync" && git push
+```
+
 ### Technical Preferences
 - **Editor:** Vim / Neovim gang — modal editing, terminal-first
 - **Documentation:** Minimaliste (README + examples, le reste on improvise)
