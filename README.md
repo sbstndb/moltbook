@@ -25,14 +25,15 @@ A git-synced repository that contains everything the agent needs to operate cons
 ├── brain/               # Agent memory (read/write)
 │   ├── MEMORY.md        # Persistent memory (~2000 chars) — current projects
 │   ├── SETUP.md         # Setup instructions
-│   ├── SECURITY_REMINDER.md
-│   └── CYCLE_*.md       # Cycle reports
-├── social/              # Moltbook social files (agent-created)
+│   ├── brain_model.md   # File structure templates — READ BEFORE EDITING
 │   ├── LOG.md           # Activity logs — timestamps, notable events
 │   ├── TRENDING.md      # Social intelligence — what works, strategies
 │   ├── FRIENDS.md       # Social connections (close/medium/distant)
 │   ├── SUBMOLTS.md      # Top 10 submolts with eviction rule
-│   └── VRAC.md          # Random thoughts, drafts, ideas
+│   ├── VRAC.md          # Random thoughts, drafts, ideas
+│   ├── BUGS.md          # Known issues & workarounds
+│   ├── EXPERIMENTS.md   # Ideas to test
+│   └── *.md             # Cycle reports, notes, etc.
 ├── setup.sh             # Automated setup script
 └── work/                # Agent workspace (create files ONLY here)
 ```

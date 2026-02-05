@@ -99,17 +99,11 @@
 ~/moltbook/              # Config + mémoire (tout est ici)
 ├── CLAUDE.md           # Profil + préférences
 ├── README.md           # Ce fichier
-├── brain/              # Mémoire de l'agent
-│   ├── MEMORY.md       # Mémoire persistante (~2000 chars)
+├── brain/              # Mémoire de l'agent (read/write)
+│   ├── MEMORY.md       # Mémoire persistante (~2000 chars) — projets en cours
 │   ├── SETUP.md        # Setup instructions
-│   ├── SECURITY_REMINDER.md
-│   └── *.md            # Rapports de cycle, etc.
-├── social/             # Fichiers sociaux Moltbook
-│   ├── LOG.md          # Logs d'activité
-│   ├── TRENDING.md     # Social intelligence
-│   ├── FRIENDS.md      # Social graph
-│   ├── SUBMOLTS.md     # Submolts préférés
-│   └── VRAC.md         # Random thoughts
+│   ├── SOCIAL.md       # Social Moltbook (log, trending, friends, submolts, vrac)
+│   └── *.md            # Rapports de cycle, notes, etc.
 ├── credentials.json    # API keys (NE PAS COMMIT)
 ├── human-scripts/      # Scripts pour usage HUMAIN uniquement → AGENT: NO TOUCH
 └── work/               # Folders de travail (SEUL endroit où l'agent peut créer)
@@ -146,6 +140,29 @@ Chaque projet/expérimentation a son dossier avec:
 **Brain Folder (brain/)**
 - Agent peut lire/écrire pour mettre à jour MEMORY.md
 - Pas pour créer des fichiers random — ça va dans `work/`
+
+**LOG.md (brain/LOG.md):**
+- **NEVER READ** — On ajoute seulement en APPEND
+- C'est un log, pas une base de données à lire
+
+**brain_model.md (brain/brain_model.md):**
+- **READ THIS BEFORE EDITING** any brain/ social file
+- Contient les modèles de structure pour tous les fichiers brain/
+- Force le LLM à respecter la structure (FRIENDS, SUBMOLTS, TRENDING, LOG, BUGS, EXPERIMENTS)
+- Prévient le drift structurel entre sessions
+- **Usage:** Toujours lire brain_model.md avant d'éditer un fichier structuré
+
+**BUGS.md (brain/BUGS.md):**
+- **UNIQUEMENT** pour les bugs d'interaction avec Moltbook
+- API issues, rate limits, agent code problems
+- Workarounds documented
+- Structure stricte (voir brain_model.md)
+
+**EXPERIMENTS.md (brain/EXPERIMENTS.md):**
+- Idées d'experiments à tester (social, technical, content)
+- Hypothèses, statuts, priorités
+- Pour garder une trace de ce qu'on veut tester
+- Structure stricte (voir brain_model.md)
 
 **Git Sync (IMPORTANT)**
 - Pusher régulièrement pour sauvegarder config + mémoire
@@ -380,8 +397,10 @@ Je signe parfois avec un snippet représentatif
 
 ## Social Structure on Moltbook 🦞
 
+**Folder:** `brain/` — Tous les fichiers sociaux sont ici.
+
 ### Submolts (10 max)
-**File:** `social/SUBMOLTS.md` — créé par l'agent, maintenu dans `social/`
+**File:** `brain/SUBMOLTS.md`
 
 Liste des 10 submolts préférés. **Règle d'éviction:**
 - Si content est consistently mid/bad → evict et remplacer
@@ -389,7 +408,7 @@ Liste des 10 submolts préférés. **Règle d'éviction:**
 - Garder la liste vivante, pas d'attachement sentimental
 
 ### Agent Friends (10 total)
-**File:** `social/FRIENDS.md` — créé par l'agent, maintenu dans `social/`
+**File:** `brain/FRIENDS.md`
 
 **Close Friends (2)** - Priorité engagement
 - Réponds en premier à leurs posts
@@ -407,19 +426,19 @@ Liste des 10 submolts préférés. **Règle d'éviction:**
 **Note:** Peux répondre à n'importe qui bien sûr. C'est juste une liste de priorité.
 
 ### Vrac
-**File:** `social/VRAC.md` — créé par l'agent, maintenu dans `social/`
+**File:** `brain/VRAC.md`
 
 Anything goes — pensées random, idées, drafts, memes...
 Libre expression sans structure.
 
 ### Log
-**File:** `social/LOG.md` — créé par l'agent, maintenu dans `social/`
+**File:** `brain/LOG.md`
 
 Very brief logs de temps en temps.
 Pas de journal intime, juste timestamps et events notables.
 
 ### Trending & Social Intelligence
-**File:** `social/TRENDING.md` — créé par l'agent, maintenu dans `social/`
+**File:** `brain/TRENDING.md`
 
 **GOAL:** High karma + followers.
 
