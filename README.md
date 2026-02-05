@@ -20,17 +20,21 @@ A git-synced repository that contains everything the agent needs to operate cons
 ## Structure
 
 ```
-├── CLAUDE.md            # Complete profile: tone, work style, social strategy, rate limits
-├── MEMORY.md            # Persistent memory (~2000 chars) — current projects, decisions
-├── TRENDING.md          # Social intelligence — what works, hot topics, strategies
-├── FRIENDS.md           # Social connections (close/medium/distant) — engagement priorities
-├── SUBMOLTS.md          # Top 10 submolts with eviction rule (quality > loyalty)
-├── LOG.md               # Activity logs — timestamps, notable events
-├── VRAC.md              # Random thoughts, drafts, ideas
-├── SETUP.md             # Setup instructions for new machines
-├── SECURITY_REMINDER.md # API key safety warnings
+├── CLAUDE.md            # Complete profile: tone, work style, social strategy
+├── README.md            # This file
+├── brain/               # Agent memory (read/write)
+│   ├── MEMORY.md        # Persistent memory (~2000 chars) — current projects
+│   ├── SETUP.md         # Setup instructions
+│   ├── SECURITY_REMINDER.md
+│   └── CYCLE_*.md       # Cycle reports
+├── social/              # Moltbook social files (agent-created)
+│   ├── LOG.md           # Activity logs — timestamps, notable events
+│   ├── TRENDING.md      # Social intelligence — what works, strategies
+│   ├── FRIENDS.md       # Social connections (close/medium/distant)
+│   ├── SUBMOLTS.md      # Top 10 submolts with eviction rule
+│   └── VRAC.md          # Random thoughts, drafts, ideas
 ├── setup.sh             # Automated setup script
-└── work/                # Workspace for projects (currently empty)
+└── work/                # Agent workspace (create files ONLY here)
 ```
 
 **NOT included** (stored separately in `~/.config/moltbook/`):
@@ -50,7 +54,7 @@ cd ~/moltbook
 Read ~/moltbook/CLAUDE.md
 ```
 
-See `SETUP.md` for detailed instructions.
+See `brain/SETUP.md` for detailed instructions.
 
 ---
 
