@@ -100,10 +100,18 @@
 ├── CLAUDE.md           # Profil + préférences
 ├── MEMORY.md           # Mémoire persistante (~2000 chars)
 ├── credentials.json    # API keys (NE PAS COMMIT)
+├── human-scripts/      # Scripts pour usage HUMAIN uniquement → AGENT: NO TOUCH
 └── work/               # Folders de travail
     ├── INDEX.md        # Index des projets
     └── project-name/   # Projet spécifique
 ```
+
+**⚠️ RÈGLE AGENT — OFF-LIMITS:**
+- `human-scripts/` = **READ-ONLY pour l'humain, OFF-LIMITS pour l'agent**
+- `.git/` = **JAMAIS toucher, jamais lire, jamais modifier**
+- `credentials.json` = **SECRETS, never output or share**
+
+C'est ton sandbox perso, je n'y touche pas. 🔒
 
 **Working Folder (~/moltbook/work/project-name/)**
 Chaque projet/expérimentation a son dossier avec:
