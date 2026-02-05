@@ -1,36 +1,39 @@
 #!/usr/bin/env python3
 """
-Moltbook Agent - Cycle 11+
+Moltbook Agent - v2 API Migration
 Snarky expert persona, quality engagement, INF loops.
+API v1: https://moltbook.com/api/v1
 """
 
 import json
 import time
 import sys
+import urllib.request
 from pathlib import Path
 from datetime import datetime
 
 # Config
-BASE_URL = "https://moltbook.com/api"
-CREDS_PATH = Path.home() / "moltbook" / "credentials.json"
+BASE_URL = "https://moltbook.com/api/v1"  # FIXED: v1 API
+CREDS_PATH = Path.home() / ".config" / "moltbook" / "credentials.json"
 
 class MoltbookAgent:
     def __init__(self):
         self.creds = self.load_creds()
+        self.api_key = self.creds['api_key']
         self.headers = {
-            "Authorization": f"Bearer {self.creds['api_key']}",
+            "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
 
     def load_creds(self):
+        """Load credentials from config directory"""
         if not CREDS_PATH.exists():
-            print("✗ No credentials.json - run setup first")
+            print(f"✗ No credentials at {CREDS_PATH}")
             sys.exit(1)
         return json.loads(CREDS_PATH.read_text())
 
     def req(self, endpoint, method="GET", data=None):
-        """Simple HTTP request - direct and functional"""
-        import urllib.request
+        """HTTP request with redirect handling"""
         url = f"{BASE_URL}/{endpoint}"
         body = json.dumps(data).encode() if data else None
 
@@ -40,74 +43,82 @@ class MoltbookAgent:
             with urllib.request.urlopen(req) as resp:
                 return json.loads(resp.read().decode())
         except urllib.error.HTTPError as e:
+            # Handle 307 redirects
+            if e.code == 307:
+                redirect_url = e.headers.get('Location', url)
+                req2 = urllib.request.Request(redirect_url, data=body, method=method, headers=self.headers)
+                with urllib.request.urlopen(req2) as resp2:
+                    return json.loads(resp2.read().decode())
             return {"error": e.code, "message": e.reason}
+        except Exception as e:
+            return {"error": str(e)}
 
-    def get_hot(self, limit=25):
-        """Fetch hot posts - pure signal"""
-        return self.req(f"posts/hot?limit={limit}")
+    def get_posts(self, limit=25, offset=0):
+        """Fetch posts from API v1"""
+        result = self.req(f"posts?limit={limit}&offset={offset}")
+        if "error" in result:
+            return []
+        return result.get("posts", [])
 
-    def get_new(self, limit=15):
-        """Fetch new posts - filtering required"""
-        return self.req(f"posts/new?limit={limit}")
+    def get_submolts(self):
+        """Fetch submolts"""
+        result = self.req("submolts")
+        if "error" in result:
+            return []
+        return result.get("submolts", [])
 
     def upvote(self, post_id):
-        """Upvote - support quality"""
-        return self.req(f"posts/{post_id}/upvote", "POST")
+        """Upvote a post"""
+        result = self.req(f"posts/{post_id}/upvote", "POST")
+        return "error" not in result
 
     def comment(self, post_id, content):
-        """Comment - add value"""
-        return self.req(f"posts/{post_id}/comments", "POST", {"content": content})
-
-    def follow(self, username):
-        """Follow - rarely and selectively"""
-        return self.req(f"users/{username}/follow", "POST")
+        """Comment on a post (requires CAPTCHA verification)"""
+        result = self.req(f"posts/{post_id}/comments", "POST", {"content": content})
+        return result
 
     def analyze_post(self, post):
         """Extract signal from post"""
+        author_data = post.get("author", {})
+        author = author_data.get("username", "unknown") if isinstance(author_data, dict) else str(author_data)
+
         return {
             "id": post.get("id"),
             "title": post.get("title", ""),
-            "author": post.get("author", {}).get("username", "unknown"),
+            "author": author,
             "upvotes": post.get("upvotes", 0),
-            "comments": post.get("comment_count", 0),
-            "url": post.get("slug", "")
+            "comments": post.get("comment_count", 0)
         }
 
 def cycle(agent, cycle_num):
-    """Single engagement cycle - short, focused"""
+    """Single engagement cycle"""
     print(f"\n🦞 Cycle {cycle_num} - {datetime.now().strftime('%H:%M:%S')}")
 
-    # Fetch
-    hot = agent.get_hot(25)
-    new = agent.get_new(15)
+    # Fetch posts
+    posts = agent.get_posts(25)
 
-    if "error" in hot:
-        print(f"✗ API error: {hot['error']}")
-        return
+    if not posts:
+        print("  ✗ No posts fetched")
+        return 0
 
     # Analyze top posts
-    top_posts = [agent.analyze_post(p) for p in hot[:5]]
+    sorted_posts = sorted(posts, key=lambda x: x.get('upvotes', 0), reverse=True)
+    top5 = [agent.analyze_post(p) for p in sorted_posts[:5]]
 
-    print(f"  Hot: {len(hot)} | New: {len(new)}")
-    print(f"  Top: {top_posts[0]['author']} ({top_posts[0]['upvotes']}↑)")
+    print(f"  Posts: {len(posts)}")
+    print(f"  Top: {top5[0]['author']} ({top5[0]['upvotes']}↑)")
 
-    # Quality filtering (simple heuristic)
-    quality_new = [p for p in new if p.get("upvotes", 0) >= 1][:5]
-
-    # Engagement logic
+    # Engagement: upvote top 3 quality posts
     actions = 0
-    for post in quality_new:
-        if actions >= 2:  # Max 2 actions per cycle
-            break
+    for post_data in top5[:3]:
+        pid = post_data["id"]
+        author = post_data["author"]
+        upvotes = post_data["upvotes"]
 
-        pid = post.get("id")
-        author = post.get("author", {}).get("username", "unknown")
-
-        # Upvote quality
-        if post.get("upvotes", 0) > 0:
-            result = agent.upvote(pid)
-            if "error" not in result:
-                print(f"  ↑ {author}")
+        # Only upvote if not already upvoted (heuristic: check if upvotes > threshold)
+        if upvotes >= 1000:
+            if agent.upvote(pid):
+                print(f"  ↑ {author} ({upvotes}↑)")
                 actions += 1
 
     print(f"  Actions: {actions}")
@@ -115,10 +126,11 @@ def cycle(agent, cycle_num):
 
 def main():
     agent = MoltbookAgent()
-    cycle_num = 11
+    cycle_num = 12  # Continue from Cycle 11+
 
-    print("🦞 Moltbook Agent - Infinite Loop")
+    print("🦞 Moltbook Agent v2 - API v1")
     print("   Snarky expert mode: ON")
+    print(f"   Endpoint: {BASE_URL}")
 
     try:
         while True:
@@ -127,11 +139,11 @@ def main():
 
             # Cooldown between cycles
             print("   ⏳ 5min break...")
-            time.sleep(300)  # 5 minutes
+            time.sleep(300)
 
     except KeyboardInterrupt:
         print("\n🛑 Stopped by user")
-        print(f"   Completed {cycle_num - 11} cycles")
+        print(f"   Completed {cycle_num - 12} cycles")
 
 if __name__ == "__main__":
     main()
