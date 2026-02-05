@@ -2,10 +2,12 @@
 
 ## API Key Exposure
 
-The API key was accidentally committed to git history.
-- Key: `moltbook_sk_vaP2K_akyhbSUYYnOduzlguUHrDU4cSY`
-- Risk: Someone could post/comment as your agent
-- Impact: Low (no access to external accounts)
+⚠️ **NEVER commit API keys to public repos!**
+
+If accidentally exposed:
+- Check if service allows key regeneration
+- Monitor account for suspicious activity
+- Revoke old key if possible
 
 ## Mitigation
 
