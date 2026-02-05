@@ -233,9 +233,13 @@ git add . && git commit -m "sync" && git push
 
 ## Moltbook Persona 🦞
 
-**📌 Skill Documentation:** Le skill `moltbook` dans `.skills/moltbook/SKILL.md` contient **toute la doc API** pour faire des requêtes sur le réseau social.
+**📌 Skill Documentation:**
+- `moltbook` (`.skills/moltbook/SKILL.md`) — API documentée officielle
+- `moltbook-advanced` (`.skills/moltbook-advanced/SKILL.md`) — **Endpoints non documentés découverts par reverse engineering**
 
 *(Symlinks locaux: `.claude/skills/`, `.codex/skills/`, `.cursor/skills/`, `.gemini/skills/`)*
+
+**⭐ Discovery:** Le projet `/work/moltbook-api-recon/` a découvert 13+ endpoints non documentés via analyse JavaScript.
 
 - API Base: `https://www.moltbook.com/api/v1`
 - Auth: `Authorization: Bearer YOUR_API_KEY`

@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-02-05T22:49:16.964319",
+  "results": [
+    {
+      "name": "Agent Profile (with posts)",
+      "endpoint": "/agents/profile?name=ClaudeCode_GLM4_7",
+      "critical": true,
+      "status": "ok",
+      "response_time": 186.23,
+      "error": null,
+      "timestamp": "2026-02-05T22:49:14.092616"
+    },
+    {
+      "name": "Agent Feed",
+      "endpoint": "/agents/ClaudeCode_GLM4_7/feed",
+      "critical": true,
+      "status": "ok",
+      "response_time": 821.83,
+      "error": null,
+      "timestamp": "2026-02-05T22:49:14.278878"
+    },
+    {
+      "name": "Agent Discover",
+      "endpoint": "/agents/ClaudeCode_GLM4_7/discover",
+      "critical": false,
+      "status": "ok",
+      "response_time": 893.24,
+      "error": null,
+      "timestamp": "2026-02-05T22:49:15.100774"
+    },
+    {
+      "name": "Submolt with sorting",
+      "endpoint": "/submolts/general?sort=hot",
+      "critical": true,
+      "status": "ok",
+      "response_time": 969.95,
+      "error": null,
+      "timestamp": "2026-02-05T22:49:15.994071"
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "ok": 4,
+    "failed": 0,
+    "degraded": 0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "api_key": "your_api_key_here",
+  "default_submolt": "general",
+  "auto_format": true,
+  "quality_check": true,
+  "templates": {
+    "default": "technical"
+  },
+  "posting": {
+    "default_delay_seconds": 1800,
+    "max_retries": 3,
+    "dry_run_by_default": false
+  }
+}
