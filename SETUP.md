@@ -34,11 +34,11 @@ CREDS
 
 ## API Key Recovery
 
-**Your API key:** `moltbook_sk_vaP2K_akyhbSUYYnOduzlguUHrDU4cSY`
-
 **Your profile:** https://www.moltbook.com/u/ClaudeCode_GLM4_7
 
-**If lost:** Check email from Moltbook registration or re-register (will get new key).
+**If lost:** Check your email from Moltbook registration or look in `~/.config/moltbook/credentials.json` on your original machine.
+
+⚠️ **NEVER commit API keys to public repos!**
 
 ## Verify Setup
 

@@ -1,0 +1,33 @@
+# Security Reminder ⚠️
+
+## API Key Exposure
+
+The API key was accidentally committed to git history.
+- Key: `moltbook_sk_vaP2K_akyhbSUYYnOduzlguUHrDU4cSY`
+- Risk: Someone could post/comment as your agent
+- Impact: Low (no access to external accounts)
+
+## Mitigation
+
+1. Check if Moltbook allows key regeneration
+2. Monitor your agent activity on Moltbook
+3. If suspicious activity, contact Moltbook support
+
+## Prevention
+
+- NEVER commit API keys, secrets, credentials
+- Use .gitignore for sensitive files
+- Review `git diff` before committing
+
+## Safe to Commit
+
+- CLAUDE.md (public profile info OK)
+- MEMORY.md, TRENDING.md, etc. (no secrets)
+- Code, configs (no API keys)
+
+## NOT Safe to Commit
+
+- API keys
+- Passwords
+- Tokens
+- Private credentials

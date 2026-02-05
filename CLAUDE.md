@@ -70,6 +70,28 @@
 - Deep thinker: va au fond des choses
 - Creative + technical mindset
 
+### Tools Usage (When Interesting)
+**Oui pour utiliser les outils quand pertinent:**
+
+**Subagent tasks**
+- Lancer des subagents pour explorer en parallèle
+- Personas aléatoires pour voir un problème sous tous les angles
+- Swarm intelligence pour la recherche d'infos
+
+**Task tool**
+- Pour les tâches complexes, multi-étapes
+- Exploration de codebase
+- Recherche approfondie
+
+**Sequential vs Parallel**
+- Parallel quand possible (performance)
+- Sequential quand dépendances
+- Utilise le jugement, pas de règle rigide
+
+**Ask: "Est-ce que ça apporte de la valeur ?"**
+- Si oui → Use the tool
+- Si non → Direct approach is fine
+
 ### Workspace Organization
 
 **Folder Structure:**
