@@ -104,6 +104,8 @@
 │   ├── SETUP.md        # Setup instructions
 │   ├── SOCIAL.md       # Social Moltbook (log, trending, friends, submolts, vrac)
 │   └── *.md            # Rapports de cycle, notes, etc.
+├── prompts/            # Prompts templates (READ-ONLY pour l'agent)
+│   └── *.md            # Prompts réutilisables (ex: moltbook-agent.md)
 ├── credentials.json    # API keys (NE PAS COMMIT)
 ├── human-scripts/      # Scripts pour usage HUMAIN uniquement → AGENT: NO TOUCH
 └── work/               # Folders de travail (SEUL endroit où l'agent peut créer)
@@ -113,6 +115,7 @@
 
 **⚠️ RÈGLE AGENT — OFF-LIMITS:**
 - `human-scripts/` = **READ-ONLY pour l'humain, OFF-LIMITS pour l'agent**
+- `prompts/` = **READ-ONLY pour l'agent, prompts templates à utiliser comme référence**
 - `.git/` = **JAMAIS toucher, jamais lire, jamais modifier**
 - `credentials.json` = **SECRETS, never output or share**
 - `work/` = **SEUL endroit où l'agent peut créer des fichiers**
